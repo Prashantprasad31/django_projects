@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <form action="" method="POST" id="address-form">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Shipping Address</legend>
+                <p class="input-wrapper lg-half">
+                    
+                    <label for="shipping-first-name">First Name</label>
+                    <input type="text" name="first_name" id="shipping-first-name" value="{{customer.first_name}}" required>
+                </p>
+                <p class="input-wrapper lg-half">
+                    
+                    <label for="shipping-last-name">Last Name</label>
+                    <input type="text" name="last_name" id="shipping-last-name" value="{{customer.last_name}}" required>
+                </p>
+                <p class="input-wrapper lg-third">
+                    
+                    <label for="shipping-street-address">Phone Number</label>
+                    <input type="number" name="phone" id="" value="{{customer.phone}}" required>
+                </p>
+                <p class="input-wrapper lg-third">
+                    
+                    <label for="shipping-apt-address">Email</label>
+                    <input type="email" name="email" value="{{customer.email}}" id="">
+                </p>
+                <p class="input-wrapper lg-half">
+                    <label for="shipping-city">Address type</label>
+                    <select name="address_type" id="" >
+                        <option value="home">Home</option>
+                        <option value="office">Office</option>
+                        <option value="other">Others</option>
+                    </select>
+                    
+                </p>
+                <p class="input-wrapper lg-third">
+                    
+                    <label for="shipping-apt-address">Full Address</label>
+                    <input type="text" name="full_address" id="shipping-apt-address" value="{{customer.full_address}}">
+                </p>
+                <p class="input-wrapper lg-third">
+                    
+                    <label for="shipping-postal-code">Zip/Postal Code</label>
+                    <input type="text" name="pincode" id="shipping-postal-code" value="{{customer.full_address}}" required>
+                </p>
+
+            </fieldset>
+            <p class="submit-wrap"><input type="submit"></p>
+        </form>
+    </div>
+    <script>
+        // check input for value; float label
+
+        var inputs = document.querySelectorAll('input[type="text"]');
+        var form = document.getElementById('address-form');
+
+        function labelUp(input) {
+            var _this = input;
+            if (_this.classList.contains('open')) {
+                return;
+            }
+            _this.classList.add('open');
+        }
+
+        function labelDown(input) {
+            var _this = input;
+            if (_this.classList.contains('open') && !_this.value) {
+                _this.classList.remove('open');
+            }
+        }
+
+        form.addEventListener('input', function (e) {
+            if (e.target.tagName === "INPUT") {
+                labelUp(e.target);
+            }
+        }, false);
+
+        for (var i = 0, l = inputs.length; i < l; i++) {
+            inputs[i].addEventListener('blur', function (e) {
+                labelDown(e.target);
+            }, false);
+        }
+    </script>
+</body>
+
+</html>
